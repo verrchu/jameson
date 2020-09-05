@@ -12,7 +12,7 @@ defmodule Jameson.MixProject do
 
   def application,
     do: [
-      extra_applications: [:logger],
+      extra_applications: [:logger, :confex, :ulid],
       mod: {Jameson.Application, []}
     ]
 
@@ -20,6 +20,7 @@ defmodule Jameson.MixProject do
     do: [
       {:confex, "~> 3.4"},
       {:typed_struct, "~> 0.2"},
+      {:ulid, "~> 0.2"},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
 end
