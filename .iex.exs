@@ -1,3 +1,5 @@
+alias Jameson.Message
+
 defmodule Helpers do
   def set_reminder(secs) do
     id = Ulid.generate()
@@ -11,6 +13,6 @@ defmodule Helpers do
     |> Jameson.Reminder.with_user_id(user_id)
     |> Jameson.Reminder.with_headline(headline)
 
-    Jameson.Registry.record(reminder)
+    Jameson.Reminder.Registry.record(reminder)
   end
 end

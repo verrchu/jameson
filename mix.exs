@@ -18,9 +18,13 @@ defmodule Jameson.MixProject do
 
   defp deps,
     do: [
-      {:confex, "~> 3.4"},
+      {:confex, "~> 3.0"},
       {:typed_struct, "~> 0.2"},
       {:ulid, "~> 0.2"},
+      {:finch, "~> 0.4"},
+      {:plug_cowboy, "~> 2.0"},
+      {:jason, "~> 1.0"},
+      {:gen_state_machine, "~> 2.0"},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
     ]
 end

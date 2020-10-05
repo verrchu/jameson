@@ -1,4 +1,4 @@
-defmodule Jameson.Registry.State do
+defmodule Jameson.Reminder.Registry.State do
   use TypedStruct
 
   alias __MODULE__
@@ -30,13 +30,14 @@ defmodule Jameson.Registry.State do
   end
 end
 
-defmodule Jameson.Registry do
+defmodule Jameson.Reminder.Registry do
   use GenServer
 
   require Logger
 
   alias __MODULE__.State
   alias Jameson.Reminder
+  alias Jameson.Message
 
   @jameson_registry_cache :jameson_registry_cache
   @jameson_registry_storage :jameson_registry_storage
@@ -120,12 +121,12 @@ defmodule Jameson.Registry do
       )
 
     for id <- outdated do
-      [{_id, reminder}] = :dets.lookup(storage_handle, id)
+      # [{_id, reminder}] = :dets.lookup(storage_handle, id)
+
+      # Message.IO.send(reminder)
 
       true = :ets.delete(cache_handle, id)
       :ok = :dets.delete(storage_handle, id)
-
-      # Session.notify(reminder)
     end
 
     :ok

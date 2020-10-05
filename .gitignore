@@ -8,3 +8,4 @@ erl_crash.dump
 jameson-*.tar
 .env
 db
+API_KEY
