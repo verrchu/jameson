@@ -1,7 +1,7 @@
 FROM elixir:1.10
 LABEL maintainer="yauheni@tsiarokhin.me"
 
-ARG API_TOKEN
+ARG API_KEY
 ENV JAMESON_API_KEY=$API_KEY
 
 ENV APPDIR=/app \
@@ -17,6 +17,6 @@ RUN mix deps.get
 RUN mix compile
 RUN mix release
 
-ENTRYPOINT ["_build/prod/rel/james/bin/jameson", "start"]
+ENTRYPOINT ["_build/prod/rel/jameson/bin/jameson", "start"]
 
 EXPOSE 80
