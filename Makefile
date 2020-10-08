@@ -24,7 +24,7 @@ publish:
 latest:
 	@ printf "CHECK VERSION: " && test -n "$(VERSION)" && printf "OK\n"
 
-	docker tag $(IMAGE):$(VERSION) $(IMAGE):latest
+	@ docker tag $(IMAGE):$(VERSION) $(IMAGE):latest
 
 bash:
 	@ docker exec -it $(CONTAINER) /bin/bash
