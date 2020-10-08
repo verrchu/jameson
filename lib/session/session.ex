@@ -16,14 +16,12 @@ end
 defmodule Jameson.Session do
   use GenStateMachine
 
+  use Jameson.Session.Steps
+
   alias __MODULE__.State
   alias __MODULE__.Registry
 
-  alias Jameson.Message
-
   require Logger
-
-  @step_awaiting_command :awaiting_command
 
   def start_link(chat_id) do
     GenStateMachine.start_link(__MODULE__, [chat_id])
@@ -31,12 +29,7 @@ defmodule Jameson.Session do
 
   def init([chat_id]) do
     state = State.new(chat_id)
-    {:ok, @step_awaiting_command, set_timer(state)}
-  end
-
-  def handle_event(:cast, {:msg, msg}, @step_awaiting_command, state) do
-    :ok = Message.IO.send(state.chat_id, msg)
-    {:next_state, @step_awaiting_command, set_timer(state)}
+    {:ok, Steps.initial_step(), set_timer(state)}
   end
 
   def handle_event(:info, :timeout, step, state) do
@@ -44,10 +37,10 @@ defmodule Jameson.Session do
     {:stop, :normal, state}
   end
 
-  def dispatch(chat_id, msg) do
+  def dispatch(chat_id, event) do
     {:ok, session} = Registry.get_session(chat_id)
 
-    GenStateMachine.cast(session, {:msg, msg})
+    GenStateMachine.cast(session, {:event, event})
   end
 
   def set_timer(state) do
