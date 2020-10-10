@@ -16,7 +16,8 @@ defmodule Jameson.Application do
          strategy: :one_for_one,
          name: Jameson.Session.Supervisor
        ]},
-      {Jameson.Session.Registry, []}
+      {Jameson.Session.Registry, []},
+      {Jameson.DB, []}
       # {Jameson.Reminder.Registry, []}
     ]
 

@@ -37,7 +37,6 @@ defmodule Jameson.Reminder.Registry do
 
   alias __MODULE__.State
   alias Jameson.Reminder
-  alias Jameson.Message
 
   @jameson_registry_cache :jameson_registry_cache
   @jameson_registry_storage :jameson_registry_storage

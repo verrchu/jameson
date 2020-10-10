@@ -2,10 +2,10 @@
 /cover/
 /deps/
 /doc/
+/data/
 /.fetch
 erl_crash.dump
 *.ez
 jameson-*.tar
 .env
-db
 API_KEY
