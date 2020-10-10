@@ -31,6 +31,7 @@ defmodule Jameson.Session.Steps do
   @command_new "/new"
   @command_cancel "/cancel"
   @command_list "/list"
+  @command_settings "/settings"
 
   def initial_step(), do: :awaiting_command
 
@@ -108,6 +109,31 @@ defmodule Jameson.Session.Steps do
   end
 
   defp process_command(:awaiting_reminder_timeout = step, @command_list, state) do
+    next_step = :awaiting_command
+    Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
+    :ok = Message.IO.send(state.chat_id, "#{step} -> #{next_step}")
+    next_step
+  end
+
+  # -------------------------------------------------------------------------- #
+
+  # --------------------------- COMMAND SETTINGS ----------------------------- #
+
+  defp process_command(:awaiting_command = step, @command_settings, state) do
+    next_step = :awaiting_command
+    Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
+    :ok = Message.IO.send(state.chat_id, "#{step} -> #{next_step}")
+    next_step
+  end
+
+  defp process_command(:awaiting_reminder_title = step, @command_settings, state) do
+    next_step = :awaiting_command
+    Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
+    :ok = Message.IO.send(state.chat_id, "#{step} -> #{next_step}")
+    next_step
+  end
+
+  defp process_command(:awaiting_reminder_timeout = step, @command_settings, state) do
     next_step = :awaiting_command
     Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
     :ok = Message.IO.send(state.chat_id, "#{step} -> #{next_step}")
