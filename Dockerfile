@@ -1,8 +1,12 @@
 FROM elixir:1.10
 LABEL maintainer="yauheni@tsiarokhin.me"
 
+RUN mkdir /data
+
 ARG API_KEY
+
 ENV JAMESON_API_KEY=$API_KEY
+ENV JAMESON_DB_FILE=/data/db
 
 ENV APPDIR=/app \
     APPNAME=jameson \

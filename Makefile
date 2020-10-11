@@ -5,7 +5,10 @@ NETWORK = ulidity
 start:
 	@ printf "CHECK VERSION: " && test -n "$(VERSION)" && printf "OK\n"
 
-	@ docker run -d --network $(NETWORK) --name $(CONTAINER) $(IMAGE):$(VERSION)
+	@ docker run -d \
+		--network $(NETWORK) \
+		--mount "type=volume,source=jameson,target=/data" \
+		--name $(CONTAINER) $(IMAGE):$(VERSION)
 
 build:
 	@ printf "CHECK API_KEY: " && test -n "$(API_KEY)" && printf "OK\n"
