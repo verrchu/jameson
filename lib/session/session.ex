@@ -3,23 +3,27 @@ defmodule Jameson.Session.State do
 
   alias __MODULE__
   alias Jameson.Reminder
+  alias Jameson.Types
 
   typedstruct do
     field(:chat_id, pos_integer(), enforce: true)
+    field(:lang, Types.lang())
     field(:reminder, Reminder.t())
     field(:timer, reference())
   end
 
   def new(chat_id), do: %State{chat_id: chat_id}
+
+  @spec with_lang(State.t(), Types.lang()) :: State.t()
+  def with_lang(state, lang), do: %State{state | lang: lang}
 end
 
 defmodule Jameson.Session do
   use GenStateMachine
 
-  use Jameson.Session.Steps
-
   alias __MODULE__.State
   alias __MODULE__.Registry
+  alias __MODULE__.Steps
 
   require Logger
 
@@ -29,7 +33,22 @@ defmodule Jameson.Session do
 
   def init([chat_id]) do
     state = State.new(chat_id)
-    {:ok, Steps.initial_step(), set_timer(state)}
+    {:ok, :awaiting_command, set_timer(state)}
+  end
+
+  def handle_event(:cast, {:event, event}, :awaiting_command = step, state) do
+    {next_step, new_state} = Steps.process_event(step, event, state)
+    {:next_state, next_step, set_timer(new_state)}
+  end
+
+  def handle_event(:cast, {:event, event}, :awaiting_reminder_title = step, state) do
+    {next_step, new_state} = Steps.process_event(step, event, state)
+    {:next_state, next_step, set_timer(new_state)}
+  end
+
+  def handle_event(:cast, {:event, event}, :awaiting_reminder_timeout = step, state) do
+    {next_step, new_state} = Steps.process_event(step, event, state)
+    {:next_state, next_step, set_timer(new_state)}
   end
 
   def handle_event(:info, :timeout, step, state) do

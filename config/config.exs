@@ -14,4 +14,4 @@ config :jameson,
   api_key: {:system, :string, "JAMESON_API_KEY"},
   http_port: {:system, :integer, "JAMESON_HTTP_PORT", 80},
   session_timeout: {:system, :integer, "JAMESON_SESSION_TIMEOUT", 60_000},
-  db_file: {:system, :charlist, "JAMESON_DB_FILE"}
+  db_file: {:system, :charlist, "JAMESON_DB_FILE", 'db'}

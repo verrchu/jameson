@@ -9,3 +9,4 @@ erl_crash.dump
 jameson-*.tar
 .env
 API_KEY
+.iex.exs

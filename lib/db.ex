@@ -45,7 +45,7 @@ defmodule Jameson.DB.Row do
   def new(), do: %Row{}
 
   @spec with_language(Row.t(), lang()) :: Row.t()
-  def with_language(row, lang), do: %{row | lang: lang}
+  def with_language(row, lang), do: %Row{row | lang: lang}
 end
 
 defmodule Jameson.DB do

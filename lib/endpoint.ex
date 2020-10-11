@@ -15,7 +15,7 @@ defmodule Jameson.Endpoint do
   end
 
   post "/notify" do
-    Message.IO.receive(conn.body_params)
+    Message.In.receive(conn.body_params)
     send_resp(conn, 200, "ok")
   end
 end
