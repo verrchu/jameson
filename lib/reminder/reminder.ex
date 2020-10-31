@@ -5,52 +5,23 @@ defmodule Jameson.Reminder do
 
   typedstruct do
     field(:id, String.t(), enforce: true)
-    field(:user_id, pos_integer(), enforce: true)
-    field(:deadline, pos_integer(), enforce: true)
-    field(:headline, String.t(), enforce: true)
-    field(:description, String.t(), enforce: false)
+    field(:chat_id, pos_integer())
+    field(:timeout, pos_integer())
+    field(:title, String.t())
   end
 
-  @spec builder() :: map()
-  def builder(), do: Map.new()
+  @spec new() :: Reminder.t()
+  def new(), do: %Reminder{id: Ulid.generate()}
 
-  @spec with_id(map(), String.t()) :: map()
-  def with_id(build_data, id) do
-    Map.put(build_data, :id, id)
-  end
+  @spec with_id(Reminder.t(), String.t()) :: Reminder.t()
+  def with_id(reminder, id), do: %{reminder | id: id}
 
-  @spec with_user_id(map(), pos_integer()) :: map()
-  def with_user_id(build_data, user_id) do
-    Map.put(build_data, :user_id, user_id)
-  end
+  @spec with_chat_id(Reminder.t(), pos_integer()) :: Reminder.t()
+  def with_chat_id(reminder, chat_id), do: %{reminder | chat_id: chat_id}
 
-  @spec with_deadline(map(), pos_integer()) :: map()
-  def with_deadline(build_data, deadline) do
-    Map.put(build_data, :deadline, deadline)
-  end
+  @spec with_timeout(Reminder.t(), pos_integer()) :: Reminder.t()
+  def with_timeout(reminder, timeout), do: %{reminder | timeout: timeout}
 
-  @spec with_headline(map(), String.t()) :: map()
-  def with_headline(build_data, headline) do
-    Map.put(build_data, :headline, headline)
-  end
-
-  @spec with_description(map(), String.t()) :: map()
-  def with_description(build_data, description) do
-    Map.put(build_data, :description, description)
-  end
-
-  @spec build(map()) :: Reminder.t()
-  def build(build_data) do
-    reminder = %Reminder{
-      id: Map.fetch!(build_data, :id),
-      user_id: Map.fetch!(build_data, :user_id),
-      deadline: Map.fetch!(build_data, :deadline),
-      headline: Map.fetch!(build_data, :headline)
-    }
-
-    case Map.fetch(build_data, :description) do
-      {:ok, description} -> %{reminder | description: description}
-      :error -> reminder
-    end
-  end
+  @spec with_title(Reminder.t(), String.t()) :: Reminder.t()
+  def with_title(reminder, title), do: %{reminder | title: title}
 end

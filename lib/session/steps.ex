@@ -4,6 +4,7 @@ defmodule Jameson.Session.Steps do
   alias Jameson.DB
   alias Jameson.Types
   alias Jameson.Config
+  alias Jameson.Reminder
 
   require Logger
 
@@ -109,7 +110,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_title = step, @command_new, state) do
@@ -120,7 +123,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_timeout = step, @command_new, state) do
@@ -131,7 +136,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   # -------------------------------------------------------------------------- #
@@ -146,7 +153,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_title = step, @command_cancel, state) do
@@ -157,7 +166,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_timeout = step, @command_cancel, state) do
@@ -168,7 +179,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   # -------------------------------------------------------------------------- #
@@ -183,7 +196,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_title = step, @command_list, state) do
@@ -194,7 +209,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_timeout = step, @command_list, state) do
@@ -205,7 +222,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   # -------------------------------------------------------------------------- #
@@ -220,7 +239,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_title = step, @command_settings, state) do
@@ -231,7 +252,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp process_command(:awaiting_reminder_timeout = step, @command_settings, state) do
@@ -242,7 +265,9 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   # -------------------------------------------------------------------------- #
@@ -258,7 +283,7 @@ defmodule Jameson.Session.Steps do
     {next_step, state}
   end
 
-  defp process_message(:awaiting_reminder_title = step, _msg, state) do
+  defp process_message(:awaiting_reminder_title = step, msg, state) do
     next_step = :awaiting_reminder_timeout
     Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
 
@@ -266,10 +291,13 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_reminder = Reminder.with_title(state.reminder, msg)
+    new_state = Session.State.with_reminder(state, new_reminder)
+
+    {next_step, new_state}
   end
 
-  defp process_message(:awaiting_reminder_timeout = step, _msg, state) do
+  defp process_message(:awaiting_reminder_timeout = step, msg, state) do
     next_step = :awaiting_command
     Logger.debug("CHAT: #{state.chat_id} | #{step} -> #{next_step}")
 
@@ -277,7 +305,12 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    {next_step, state}
+    new_reminder = Reminder.with_timeout(state.reminder, msg)
+    :ok = Reminder.Registry.record(new_reminder)
+
+    new_state = Session.State.with_reminder(state, Reminder.new())
+
+    {next_step, new_state}
   end
 
   defp command?(@command_new), do: true

@@ -12,10 +12,14 @@ defmodule Jameson.Session.State do
     field(:timer, reference())
   end
 
-  def new(chat_id), do: %State{chat_id: chat_id}
+  @spec new(pos_integer()) :: State.t()
+  def new(chat_id), do: %State{chat_id: chat_id, reminder: Reminder.new()}
 
   @spec with_lang(State.t(), Types.lang()) :: State.t()
   def with_lang(state, lang), do: %State{state | lang: lang}
+
+  @spec with_reminder(State.t(), Reminder.t()) :: State.t()
+  def with_reminder(state, reminder), do: %State{state | reminder: reminder}
 end
 
 defmodule Jameson.Session do
