@@ -110,7 +110,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -123,7 +124,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -136,7 +138,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -153,7 +156,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -166,7 +170,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -179,7 +184,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -196,7 +202,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -209,7 +216,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -222,7 +230,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -239,7 +248,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -252,7 +262,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -265,7 +276,8 @@ defmodule Jameson.Session.Steps do
       Message.Out.new("#{step} -> #{next_step}")
       |> Message.Out.send(state.chat_id)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end
@@ -308,7 +320,8 @@ defmodule Jameson.Session.Steps do
     new_reminder = Reminder.with_timeout(state.reminder, msg)
     :ok = Reminder.Registry.record(new_reminder)
 
-    new_state = Session.State.with_reminder(state, Reminder.new())
+    new_reminder = Reminder.new() |> Reminder.with_chat_id(state.chat_id)
+    new_state = Session.State.with_reminder(state, new_reminder)
 
     {next_step, new_state}
   end

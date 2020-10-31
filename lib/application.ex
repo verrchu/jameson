@@ -17,8 +17,8 @@ defmodule Jameson.Application do
          name: Jameson.Session.Supervisor
        ]},
       {Jameson.Session.Registry, []},
+      {Jameson.Reminder.Registry, []},
       {Jameson.DB, []}
-      # {Jameson.Reminder.Registry, []}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: Jameson.Supervisor)
