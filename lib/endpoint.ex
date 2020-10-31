@@ -1,11 +1,8 @@
 defmodule Jameson.Endpoint do
   use Plug.Router
 
-  require Logger
-
   alias Jameson.Message
 
-  plug(Plug.Logger)
   plug(:match)
   plug(Plug.Parsers, parsers: [:json], json_decoder: Jason)
   plug(:dispatch)
