@@ -37,7 +37,8 @@ iex:
 
 register:
 	@ printf "CHECK API_KEY: " && test -n "$(API_KEY)" && printf "OK\n"
+	@ printf "CHECK ENDPOINT: " && test -n "$(ENDPOINT)" && printf "OK\n"
 
 	@ curl -X POST -H "Content-Type: application/json" \
 		https://api.telegram.org/bot$(API_KEY)/setWebhook \
-		-d '{"url": "https://ulidity.com/bot/jameson/notify"}'
+		-d '{"url": "$(ENDPOINT)"}'
