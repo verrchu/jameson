@@ -1,4 +1,4 @@
-FROM elixir:1.11.1
+FROM elixir:1.11.2
 LABEL maintainer="yauheni@tsiarokhin.me"
 
 RUN mkdir /data
